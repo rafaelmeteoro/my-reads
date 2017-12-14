@@ -1,21 +1,27 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { Route } from 'react-router-dom';
+import ListBooks from './components/ListBooks';
+import SearchBooks from './components/SearchBooks';
 import './App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
+class BooksApp extends Component {
+
+    state = {
+        showSearchPage: false
+    }
+
+    render() {
+        return (
+            <div className="app">
+                <Route exact path='/' render={() => (
+                    <ListBooks />
+                )}/>
+                <Route path='/search' render={( history) => (
+                    <SearchBooks />
+                )}/>
+            </div>
+        );
+    }
 }
 
-export default App;
+export default BooksApp;
