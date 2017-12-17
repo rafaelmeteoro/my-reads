@@ -1,23 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import * as BooksAPI from '../utils/BooksAPI';
 import ListBooks from './ListBooks';
+import PropTypes from 'prop-types';
 
 class BookCase extends Component {
 
-    state = {
-        books: []
-    }
-
-    componentWillMount() {
-        BooksAPI.getAll().then(books => {
-            this.setState({ books })
-        })
+    static propTypes = {
+        books: PropTypes.array.isRequired,
+        OnChangeBook: PropTypes.func.isRequired
     }
 
     render() {
 
-        const { books } = this.state;
+        const { books } = this.props;
 
         const currentlyReadingBooks = books.filter(book => book.shelf === 'currentlyReading');
         const wantToReadBooks = books.filter(book => book.shelf === 'wantToRead');
@@ -33,19 +28,28 @@ class BookCase extends Component {
                         <div className="bookshelf">
                             <h2 className="bookshelf-title">Currently Reading</h2>
                             <div className="bookshelf-books">
-                                <ListBooks books={currentlyReadingBooks} />
+                                <ListBooks
+                                    books={currentlyReadingBooks}
+                                    OnChangeBook={this.props.OnChangeBook}
+                                />
                             </div>
                         </div>
                         <div className="bookshelf">
                             <h2 className="bookshelf-title">Want to Read</h2>
                             <div className="bookshelf-books">
-                                <ListBooks books={wantToReadBooks} />
+                                <ListBooks
+                                    books={wantToReadBooks}
+                                    OnChangeBook={this.props.OnChangeBook}
+                                />
                             </div>
                         </div>
                         <div className="bookshelf">
                             <h2 className="bookshelf-title">Read</h2>
                             <div className="bookshelf-books">
-                                <ListBooks books={readBooks} />
+                                <ListBooks
+                                    books={readBooks}
+                                    OnChangeBook={this.props.OnChangeBook}
+                                />
                             </div>
                         </div>
                     </div>

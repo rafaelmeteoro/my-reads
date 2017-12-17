@@ -3,18 +3,16 @@ import { Link } from 'react-router-dom';
 import { Debounce } from 'react-throttle';
 import * as BooksAPI from '../utils/BooksAPI';
 import ListBooks from './ListBooks';
+import PropTypes from 'prop-types';
 
 class SearchBooks extends Component {
 
-    state = {
-        query: '',
-        books: []
+    static propTypes = {
+        OnChangeBook: PropTypes.func.isRequired
     }
 
-    updateQuery = (query) => {
-        this.setState({
-            query: query.trim()
-        })
+    state = {
+        books: []
     }
 
     searchBooks(query) {
@@ -33,7 +31,7 @@ class SearchBooks extends Component {
             <div className="search-books">
                 <div className="search-books-bar">
                     <Link className='close-search' to='/'>Close</Link>
-                    <div className="search-books-input-wrapper">                        
+                    <div className="search-books-input-wrapper">
                         <Debounce time='300' handler='onChange'>
                             <input
                                 type="text"
@@ -43,7 +41,10 @@ class SearchBooks extends Component {
                         </Debounce>
                     </div>
                 </div>
-                <ListBooks books={books} />
+                <ListBooks
+                    books={books}
+                    OnChangeBook={this.props.OnChangeBook}
+                />
             </div>
         )
     }
