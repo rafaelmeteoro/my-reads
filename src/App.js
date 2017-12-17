@@ -14,7 +14,7 @@ class BooksApp extends Component {
     componentWillMount() {
         BooksAPI.getAll().then(books => {
             this.setState({ books })
-        })
+        });
     }
 
     changeBook = (book, value) => {
@@ -33,7 +33,7 @@ class BooksApp extends Component {
     render() {
 
         return (
-            <div className="app">
+            <div className='app'>
                 <Route exact path='/' render={() => (
                     <BookCase
                         books={this.state.books}

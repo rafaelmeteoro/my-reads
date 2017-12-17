@@ -28,14 +28,14 @@ class SearchBooks extends Component {
         const { books } = this.state;
 
         return (
-            <div className="search-books">
-                <div className="search-books-bar">
+            <div className='search-books'>
+                <div className='search-books-bar'>
                     <Link className='close-search' to='/'>Close</Link>
-                    <div className="search-books-input-wrapper">
+                    <div className='search-books-input-wrapper'>
                         <Debounce time='300' handler='onChange'>
                             <input
-                                type="text"
-                                placeholder="Search by title or author"
+                                type='text'
+                                placeholder='Search by title or author'
                                 onChange={(event) => this.searchBooks(event.target.value)}
                             />
                         </Debounce>
