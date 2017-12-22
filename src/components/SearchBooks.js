@@ -8,24 +8,49 @@ import PropTypes from 'prop-types';
 class SearchBooks extends Component {
 
     static propTypes = {
+        booksCase: PropTypes.array.isRequired,
         OnChangeBook: PropTypes.func.isRequired
     }
 
     state = {
-        books: []
+        books: [],
+        booksCase: []
     }
 
-    searchBooks(query) {
+    componentWillMount() {
+        const { booksCase } = this.props;
+        this.setState({ booksCase });
+    }
+
+    searchBooks(query, booksCase) {
         query = query || ' ';
 
         BooksAPI.search(query).then(books => {
-            this.setState({ books: books.error ? [] : books })
+
+            let result;
+
+            if (books.error) {
+                result = [];
+            } else {
+                result = this.merge(books, booksCase, 'id');
+            }
+
+            this.setState({ books: result });
         });
+    }
+
+    // Merge 2 arrays from a property
+    merge(a, b, prop) {
+        let reduced = a.filter(aitem => {
+            return !b.find(bitem => aitem[prop] === bitem[prop]);
+        })
+
+        return reduced.concat(b);
     }
 
     render() {
 
-        const { books } = this.state;
+        const { books, booksCase } = this.state;
 
         return (
             <div className='search-books'>
@@ -36,7 +61,7 @@ class SearchBooks extends Component {
                             <input
                                 type='text'
                                 placeholder='Search by title or author'
-                                onChange={(event) => this.searchBooks(event.target.value)}
+                                onChange={(event) => this.searchBooks(event.target.value, booksCase)}
                             />
                         </Debounce>
                     </div>
