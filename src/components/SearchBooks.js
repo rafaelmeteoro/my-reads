@@ -35,6 +35,8 @@ class SearchBooks extends Component {
                 result = this.merge(books, booksCase, 'id');
             }
 
+            console.log(result);
+
             this.setState({ books: result });
         });
     }
@@ -42,6 +44,7 @@ class SearchBooks extends Component {
     // Merge 2 arrays from a property
     merge(a, b, prop) {
         let reduced = a.filter(aitem => {
+            aitem.shelf = 'none';
             return !b.find(bitem => aitem[prop] === bitem[prop]);
         })
 
