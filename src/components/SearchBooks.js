@@ -35,8 +35,6 @@ class SearchBooks extends Component {
                 result = this.merge(books, booksCase, 'id');
             }
 
-            console.log(result);
-
             this.setState({ books: result });
         });
     }
