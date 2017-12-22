@@ -11,23 +11,25 @@ class BooksApp extends Component {
         books: []
     }
 
-    componentWillMount() {
+    componentDidMount() {
         BooksAPI.getAll().then(books => {
             this.setState({ books })
         });
     }
 
     changeBook = (book, value) => {
-        let { books } = this.state;
+        BooksAPI.update(book, value).then(() => {
 
-        books = books.filter(item => item.id !== book.id)
-            .concat({
-                ...book,
-                shelf: value
-            });
+            let { books } = this.state;
 
-        BooksAPI.update(book, value);
-        this.setState({ books });
+            books = books.filter(item => item.id !== book.id)
+                .concat({
+                    ...book,
+                    shelf: value
+                });
+
+            this.setState({ books });
+        });
     }
 
     render() {
