@@ -17,7 +17,7 @@ const ListBooks = (props) => {
                                         onChange={e => {
                                             OnChangeBook(book, e.target.value)
                                         }}
-                                        value={book.shelf}
+                                        value={'move'}
                                     >
                                         <option value='move' disabled>Move to...</option>
                                         <option value='currentlyReading'>Currently Reading</option>
